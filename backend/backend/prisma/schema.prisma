@@ -1,0 +1,76 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite" // PostgreSQL হলে "postgresql" দিন
+  url      = env("DATABASE_URL")
+}
+
+enum UserRole {
+  USER
+  DOCTOR
+  ADMIN
+}
+
+enum AppointmentStatus {
+  PENDING
+  APPROVED
+  COMPLETED
+  CANCELLED
+}
+
+model User {
+  id           String        @id @default(cuid())
+  name         String
+  email        String        @unique
+  password     String
+  phone        String?
+  role         UserRole      @default(USER)
+  appointments Appointment[]
+  createdAt    DateTime      @default(now())
+  updatedAt    DateTime      @updatedAt
+}
+
+model Doctor {
+  id            String        @id @default(cuid())
+  name          String
+  specialization String
+  hospital      String
+  phone         String?
+  email         String?       @unique
+  appointments  Appointment[]
+  createdAt     DateTime      @default(now())
+}
+
+model Hospital {
+  id        String   @id @default(cuid())
+  name      String
+  division  String
+  district  String
+  address   String
+  phone     String?
+  createdAt DateTime @default(now())
+}
+
+model Medicine {
+  id          String   @id @default(cuid())
+  name        String
+  genericName String
+  company     String
+  price       Float
+  createdAt   DateTime @default(now())
+}
+
+model Appointment {
+  id        String              @id @default(cuid())
+  userId    String
+  doctorId  String
+  date      DateTime
+  status    AppointmentStatus   @default(PENDING)
+
+  user       User   @relation(fields: [userId], references: [id])
+  doctor     Doctor @relation(fields: [doctorId], references: [id])
+
+  createdAt DateTime @default(now())
+}
