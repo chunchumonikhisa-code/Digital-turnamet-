@@ -1,0 +1,141 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Division {
+  id        Int       @id @default(autoincrement())
+  name      String    @unique
+  bn_name   String?   // Bengali name
+  districts District[]
+
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+}
+
+model District {
+  id        Int       @id @default(autoincrement())
+  name      String
+  bn_name   String?
+  divisionId Int
+  division  Division  @relation(fields: [divisionId], references: [id])
+  upazilas  Upazila[]
+  hospitals Hospital[]
+  doctors   Doctor[]
+
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+}
+
+model Upazila {
+  id        Int       @id @default(autoincrement())
+  name      String
+  bn_name   String?
+  districtId Int
+  district  District  @relation(fields: [districtId], references: [id])
+
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+}
+
+model User {
+  id            Int       @id @default(autoincrement())
+  name          String
+  phone         String    @unique
+  email         String?   @unique
+  passwordHash  String?   // Nullable for OTP-only users
+  dob           DateTime?
+  bloodGroup    String?
+  emergencyContact String?
+  isVerified    Boolean   @default(false)
+  
+  appointments  Appointment[]
+  reviews       Review[]
+
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+}
+
+model Doctor {
+  id              Int       @id @default(autoincrement())
+  name            String
+  degree          String
+  specialization  String    // e.g., Cardiology, Neurology
+  chamberAddress  String
+  fee             Float
+  rating          Float     @default(0.0)
+  isVerified      Boolean   @default(false)
+  districtId      Int
+  district        District  @relation(fields: [districtId], references: [id])
+  
+  appointments    Appointment[]
+  reviews         Review[]
+
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+}
+
+model Hospital {
+  id          Int       @id @default(autoincrement())
+  name        String
+  type        String    // Govt, Private, Clinic, Diagnostic
+  address     String
+  phone       String
+  emergencyPhone String?
+  latitude    Float?
+  longitude   Float?
+  districtId  Int
+  district    District  @relation(fields: [districtId], references: [id])
+
+  appointments Appointment[]
+
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+}
+
+model Appointment {
+  id          Int       @id @default(autoincrement())
+  date        DateTime
+  timeSlot    String    // e.g., "10:30 AM"
+  status      String    @default("Pending") // Pending, Confirmed, Cancelled, Completed
+  type        String    @default("Physical") // Physical, Online
+  
+  userId      Int
+  user        User      @relation(fields: [userId], references: [id])
+  doctorId    Int
+  doctor      Doctor    @relation(fields: [doctorId], references: [id])
+  hospitalId  Int
+  hospital    Hospital  @relation(fields: [hospitalId], references: [id])
+
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+}
+
+model Medicine {
+  id           Int       @id @default(autoincrement())
+  genericName  String
+  brandName    String
+  strength     String
+  manufacturer String
+  indications  String?
+  sideEffects  String?
+
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+}
+
+model Review {
+  id        Int       @id @default(autoincrement())
+  rating    Int
+  comment   String?
+  userId    Int
+  user      User      @relation(fields: [userId], references: [id])
+  doctorId  Int
+  doctor    Doctor    @relation(fields: [doctorId], references: [id])
+
+  createdAt DateTime  @default(now())
+}
