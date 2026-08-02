@@ -1,0 +1,113 @@
+import { useState, useEffect } from "react";
+import Head from "next/head";
+import Link from "next/link";
+
+export default function Home() {
+  const [doctors, setDoctors] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [searchTerm, setSearchTerm] = useState("");
+  const [specialization, setSpecialization] = useState("");
+
+  // 1. লগইন ছাড়াই ব্যাকএন্ড থেকে ডাক্তার লোড করা
+  useEffect(() => {
+    fetch("http://localhost:5000/api/public/doctors")
+      .then((res) => res.json())
+      .then((data) => {
+        setDoctors(data);
+        setLoading(false);
+      })
+      .catch((err) => {
+        console.error("ডাক্তার লোড করতে সমস্যা:", err);
+        setLoading(false);
+      });
+  }, []);
+
+  // 2. সার্চ ও ফিল্টার লজিক (ফ্রন্টেন্ডে)
+  const filteredDoctors = doctors.filter((doc) => {
+    const matchesName = doc.name.toLowerCase().includes(searchTerm.toLowerCase());
+    const matchesSpecialization = specialization === "" || doc.specialization === specialization;
+    return matchesName && matchesSpecialization;
+  });
+
+  // 3. স্পেশালাইজেশন ইউনিক লিস্ট (ড্রপডাউনের জন্য)
+  const uniqueSpecializations = [...new Set(doctors.map((doc) => doc.specialization))];
+
+  return (
+    <>
+      <Head>
+        <title>AI-Health-BD | স্বাস্থ্য সেবা সহজে</title>
+        <meta name="description" content="বাংলাদেশের ডাক্তার, হাসপাতাল ও ওষুধের তথ্য" />
+      </Head>
+
+      {/* হিরো সেকশন (বড় সার্চ বার) */}
+      <div className="bg-blue-600 py-10 text-white text-center">
+        <h1 className="text-4xl font-bold">আপনার স্বাস্থ্যসেবা সহজ করুন</h1>
+        <p className="mt-2 text-lg">লগইন ছাড়াই খুঁজুন ডাক্তার, হাসপাতাল ও ওষুধ</p>
+        
+        <div className="mt-6 flex justify-center gap-4 flex-wrap px-4">
+          <input
+            type="text"
+            placeholder="ডাক্তারের নাম লিখুন..."
+            className="px-4 py-3 w-72 rounded-lg text-black"
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+          />
+          
+          <select
+            className="px-4 py-3 rounded-lg text-black"
+            value={specialization}
+            onChange={(e) => setSpecialization(e.target.value)}
+          >
+            <option value="">সব স্পেশালাইজেশন</option>
+            {uniqueSpecializations.map((spec) => (
+              <option key={spec} value={spec}>{spec}</option>
+            ))}
+          </select>
+
+          <Link href="/ai-symptom">
+            <button className="bg-yellow-500 hover:bg-yellow-600 text-black px-6 py-3 rounded-lg font-bold">
+              🤖 এআই সিম্পটম চেক
+            </button>
+          </Link>
+        </div>
+      </div>
+
+      {/* ডাক্তার লিস্ট দেখানোর জায়গা */}
+      <div className="container mx-auto px-4 py-8">
+        <h2 className="text-2xl font-bold mb-4">জনপ্রিয় ডাক্তারগণ</h2>
+
+        {loading ? (
+          <p>লোড হচ্ছে...</p>
+        ) : (
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {filteredDoctors.length === 0 ? (
+              <p>কোন ডাক্তার পাওয়া যায়নি।</p>
+            ) : (
+              filteredDoctors.map((doc) => (
+                <div key={doc.id} className="border rounded-lg p-4 shadow hover:shadow-lg transition">
+                  <h3 className="text-xl font-semibold">{doc.name}</h3>
+                  <p className="text-gray-600">{doc.specialization}</p>
+                  <p className="text-sm text-gray-500">{doc.degree}</p>
+                  <p className="text-sm">📍 {doc.district?.name}, {doc.district?.division?.name}</p>
+                  <p className="text-green-600 font-bold mt-2">সালা: {doc.fee} টাকা</p>
+                  <Link href={`/doctor/${doc.id}`}>
+                    <button className="mt-3 bg-blue-500 text-white px-4 py-2 rounded w-full hover:bg-blue-600">
+                      বিস্তারিত দেখুন
+                    </button>
+                  </Link>
+                  {/* এখানে "অ্যাপয়েন্টমেন্ট বুক" বাটন থাকবে, কিন্তু ক্লিক করলে লগইন পেজে পাঠাবে */}
+                  <button 
+                    onClick={() => alert("অ্যাপয়েন্টমেন্ট বুক করতে লগইন করুন")}
+                    className="mt-2 bg-gray-200 text-gray-700 px-4 py-2 rounded w-full hover:bg-gray-300"
+                  >
+                    📅 অ্যাপয়েন্টমেন্ট বুক (লগইন আবশ্যক)
+                  </button>
+                </div>
+              ))
+            )}
+          </div>
+        )}
+      </div>
+    </>
+  );
+}
