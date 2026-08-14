@@ -1,0 +1,1227 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>FF Bazar - Free Fire Top Up</title>
+
+<style>
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+  font-family:Arial,sans-serif;
+}
+
+body{
+  background:#080b12;
+  color:#fff;
+}
+
+header{
+  position:sticky;
+  top:0;
+  z-index:999;
+  background:#10141d;
+  padding:14px 5%;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  border-bottom:1px solid #252b38;
+}
+
+.logo{
+  font-size:25px;
+  font-weight:900;
+  color:#ff3030;
+}
+
+nav a{
+  color:#fff;
+  text-decoration:none;
+  margin-left:18px;
+  font-size:14px;
+}
+
+nav a:hover{
+  color:#ff3434;
+}
+
+.hero{
+  height:390px;
+  position:relative;
+  overflow:hidden;
+}
+
+.slide{
+  position:absolute;
+  inset:0;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  text-align:center;
+  opacity:0;
+  transition:.6s;
+  padding:30px;
+}
+
+.slide.active{
+  opacity:1;
+}
+
+.slide:nth-child(1){
+  background:
+  linear-gradient(#0008,#0008),
+  linear-gradient(135deg,#7f1d1d,#111827);
+}
+
+.slide:nth-child(2){
+  background:
+  linear-gradient(#0008,#0008),
+  linear-gradient(135deg,#1e3a8a,#111827);
+}
+
+.slide:nth-child(3){
+  background:
+  linear-gradient(#0008,#0008),
+  linear-gradient(135deg,#581c87,#111827);
+}
+
+.slide h1{
+  font-size:45px;
+  margin-bottom:12px;
+}
+
+.slide p{
+  color:#ddd;
+  margin-bottom:22px;
+}
+
+.btn{
+  border:0;
+  background:#ef3030;
+  color:white;
+  padding:12px 22px;
+  border-radius:8px;
+  cursor:pointer;
+  font-weight:bold;
+}
+
+.btn:hover{
+  background:#c91e1e;
+}
+
+.dots{
+  position:absolute;
+  bottom:18px;
+  left:0;
+  right:0;
+  text-align:center;
+}
+
+.dot{
+  width:9px;
+  height:9px;
+  display:inline-block;
+  background:#777;
+  border-radius:50%;
+  margin:4px;
+  cursor:pointer;
+}
+
+.dot.active{
+  background:#fff;
+}
+
+section{
+  padding:45px 5%;
+}
+
+.title{
+  text-align:center;
+  font-size:28px;
+  margin-bottom:28px;
+}
+
+.category-grid{
+  display:grid;
+  grid-template-columns:
+  repeat(auto-fit,minmax(160px,1fr));
+  gap:18px;
+}
+
+.category{
+  background:#111722;
+  border:1px solid #252d3b;
+  border-radius:15px;
+  padding:25px 15px;
+  text-align:center;
+  cursor:pointer;
+  transition:.25s;
+}
+
+.category:hover{
+  transform:translateY(-5px);
+  border-color:#ef3030;
+}
+
+.category .icon{
+  font-size:48px;
+  margin-bottom:12px;
+}
+
+.category h3{
+  margin-bottom:7px;
+}
+
+.category p{
+  color:#aaa;
+  font-size:13px;
+}
+
+#packageArea{
+  display:none;
+}
+
+.back{
+  margin-bottom:20px;
+  background:#252b38;
+}
+
+.packages{
+  display:grid;
+  grid-template-columns:
+  repeat(auto-fit,minmax(170px,1fr));
+  gap:15px;
+}
+
+.package{
+  background:#111722;
+  border:1px solid #252d3b;
+  border-radius:14px;
+  padding:20px;
+  text-align:center;
+}
+
+.package h3{
+  margin-bottom:10px;
+}
+
+.package .price{
+  font-size:21px;
+  color:#ff4747;
+  font-weight:bold;
+  margin-bottom:15px;
+}
+
+.order-box{
+  max-width:600px;
+  margin:auto;
+  background:#111722;
+  border:1px solid #252d3b;
+  border-radius:15px;
+  padding:25px;
+}
+
+label{
+  display:block;
+  margin:12px 0 6px;
+  font-weight:bold;
+}
+
+input,select{
+  width:100%;
+  padding:13px;
+  border-radius:8px;
+  border:1px solid #303846;
+  background:#080b12;
+  color:#fff;
+  outline:none;
+}
+
+.payment{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:10px;
+  margin-top:8px;
+}
+
+.pay{
+  padding:15px;
+  border:2px solid #303846;
+  border-radius:9px;
+  text-align:center;
+  cursor:pointer;
+}
+
+.pay.active{
+  border-color:#ff3030;
+  background:#351313;
+}
+
+.full{
+  width:100%;
+  margin-top:18px;
+}
+
+.success{
+  display:none;
+  margin-top:18px;
+  padding:15px;
+  border-radius:10px;
+  background:#06351f;
+  color:#8ff0be;
+}
+
+.features{
+  display:grid;
+  grid-template-columns:
+  repeat(auto-fit,minmax(180px,1fr));
+  gap:15px;
+}
+
+.feature{
+  background:#111722;
+  border:1px solid #252d3b;
+  border-radius:12px;
+  padding:22px;
+  text-align:center;
+}
+
+.feature div{
+  font-size:35px;
+  margin-bottom:10px;
+}
+
+.support{
+  max-width:650px;
+  margin:auto;
+  text-align:center;
+  background:#111722;
+  border:1px solid #252d3b;
+  border-radius:15px;
+  padding:30px;
+}
+
+.support-buttons{
+  display:flex;
+  justify-content:center;
+  gap:12px;
+  flex-wrap:wrap;
+  margin-top:20px;
+}
+
+footer{
+  background:#10141d;
+  padding:35px 5%;
+  text-align:center;
+  color:#aaa;
+}
+
+footer h2{
+  color:#ff3030;
+  margin-bottom:10px;
+}
+
+footer a{
+  color:#aaa;
+  text-decoration:none;
+  margin:0 8px;
+}
+
+@media(max-width:650px){
+
+  nav{
+    display:none;
+  }
+
+  .slide h1{
+    font-size:31px;
+  }
+
+  .hero{
+    height:330px;
+  }
+
+  .payment{
+    grid-template-columns:1fr;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<!-- HEADER -->
+<header>
+
+  <div class="logo">
+    FF BAZAR
+  </div>
+
+  <nav>
+    <a href="#home">Home</a>
+    <a href="#categories">Top Up</a>
+    <a href="#support">Support</a>
+  </nav>
+
+</header>
+
+
+<!-- SLIDER -->
+<section class="hero" id="home">
+
+  <div class="slide active">
+    <div>
+      <h1>🔥 FF BAZAR</h1>
+      <p>Fast & Easy Free Fire Top Up</p>
+      <button class="btn"
+        onclick="goCategories()">
+        TOP UP NOW
+      </button>
+    </div>
+  </div>
+
+  <div class="slide">
+    <div>
+      <h1>💎 Diamond Top Up</h1>
+      <p>Choose your Diamond package</p>
+      <button class="btn"
+        onclick="openCategory('diamond')">
+        VIEW PACKAGES
+      </button>
+    </div>
+  </div>
+
+  <div class="slide">
+    <div>
+      <h1>👑 Membership</h1>
+      <p>Weekly & Monthly Membership</p>
+      <button class="btn"
+        onclick="openCategory('weekly')">
+        VIEW NOW
+      </button>
+    </div>
+  </div>
+
+  <div class="dots">
+    <span class="dot active" onclick="showSlide(0)"></span>
+    <span class="dot" onclick="showSlide(1)"></span>
+    <span class="dot" onclick="showSlide(2)"></span>
+  </div>
+
+</section>
+
+
+<!-- CATEGORIES -->
+<section id="categories">
+
+  <h2 class="title">
+    🎮 Select Category
+  </h2>
+
+  <div class="category-grid">
+
+    <div class="category"
+      onclick="openCategory('diamond')">
+
+      <div class="icon">💎</div>
+
+      <h3>Diamond</h3>
+
+      <p>Diamond Top Up</p>
+
+    </div>
+
+
+    <div class="category"
+      onclick="openCategory('weekly')">
+
+      <div class="icon">👑</div>
+
+      <h3>Weekly</h3>
+
+      <p>Weekly Membership</p>
+
+    </div>
+
+
+    <div class="category"
+      onclick="openCategory('monthly')">
+
+      <div class="icon">🏆</div>
+
+      <h3>Monthly</h3>
+
+      <p>Monthly Membership</p>
+
+    </div>
+
+
+    <div class="category"
+      onclick="openCategory('levelup')">
+
+      <div class="icon">🚀</div>
+
+      <h3>Level Up</h3>
+
+      <p>Level Up Packages</p>
+
+    </div>
+
+
+    <div class="category"
+      onclick="openCategory('airdrop')">
+
+      <div class="icon">🎁</div>
+
+      <h3>Airdrop</h3>
+
+      <p>Special Offers</p>
+
+    </div>
+
+  </div>
+
+</section>
+
+
+<!-- PACKAGE AREA -->
+<section id="packageArea">
+
+  <button
+    class="btn back"
+    onclick="closePackages()">
+
+    ← Back
+
+  </button>
+
+  <h2
+    class="title"
+    id="packageTitle">
+  </h2>
+
+  <div
+    class="packages"
+    id="packages">
+  </div>
+
+</section>
+
+
+<!-- ORDER -->
+<section id="order">
+
+  <h2 class="title">
+    🛒 Place Your Order
+  </h2>
+
+  <div class="order-box">
+
+    <form id="orderForm">
+
+      <label>
+        Free Fire Player ID
+      </label>
+
+      <input
+        id="playerId"
+        type="text"
+        placeholder="Enter Player ID"
+        required
+      >
+
+
+      <label>
+        Selected Package
+      </label>
+
+      <input
+        id="selectedPackage"
+        type="text"
+        readonly
+        placeholder="Select a package first"
+        required
+      >
+
+
+      <label>
+        Payment Method
+      </label>
+
+      <div class="payment">
+
+        <div
+          class="pay"
+          id="bkash"
+          onclick="selectPayment('bKash')">
+
+          📱 bKash
+
+        </div>
+
+        <div
+          class="pay"
+          id="nagad"
+          onclick="selectPayment('Nagad')">
+
+          📱 Nagad
+
+        </div>
+
+      </div>
+
+
+      <input
+        id="paymentMethod"
+        type="hidden"
+      >
+
+
+      <label>
+        Transaction ID
+      </label>
+
+      <input
+        id="trx"
+        type="text"
+        placeholder="Enter Transaction ID"
+        required
+      >
+
+
+      <button
+        class="btn full"
+        id="submitBtn"
+        type="submit">
+
+        Submit Order
+
+      </button>
+
+    </form>
+
+
+    <div
+      class="success"
+      id="success">
+
+    </div>
+
+  </div>
+
+</section>
+
+
+<!-- FEATURES -->
+<section>
+
+  <h2 class="title">
+    ⭐ Why Choose FF Bazar?
+  </h2>
+
+  <div class="features">
+
+    <div class="feature">
+      <div>⚡</div>
+      <h3>Fast Delivery</h3>
+      <p>দ্রুত অর্ডার প্রসেসিং</p>
+    </div>
+
+    <div class="feature">
+      <div>🔒</div>
+      <h3>Secure</h3>
+      <p>নিরাপদ অর্ডার ব্যবস্থা</p>
+    </div>
+
+    <div class="feature">
+      <div>💳</div>
+      <h3>Easy Payment</h3>
+      <p>সহজ পেমেন্ট ব্যবস্থা</p>
+    </div>
+
+    <div class="feature">
+      <div>🎧</div>
+      <h3>Customer Support</h3>
+      <p>সাপোর্ট টিমের সাহায্য</p>
+    </div>
+
+  </div>
+
+</section>
+
+
+<!-- SUPPORT -->
+<section id="support">
+
+  <div class="support">
+
+    <h2>
+      🎧 Customer Support
+    </h2>
+
+    <p style="margin-top:10px;color:#aaa;">
+      কোনো সমস্যা হলে আমাদের সাথে যোগাযোগ করুন।
+    </p>
+
+    <div class="support-buttons">
+
+      <!-- নিজের আসল support link বসাবেন -->
+
+      <a
+        href="#"
+        class="btn">
+        💬 Live Support
+      </a>
+
+      <a
+        href="#"
+        class="btn">
+        📘 Facebook
+      </a>
+
+    </div>
+
+  </div>
+
+</section>
+
+
+<!-- FOOTER -->
+<footer>
+
+  <h2>FF BAZAR</h2>
+
+  <p>
+    Free Fire Top Up Service
+  </p>
+
+  <p style="margin-top:15px;">
+    <a href="#home">Home</a>
+    <a href="#categories">Packages</a>
+    <a href="#support">Support</a>
+  </p>
+
+  <p style="margin-top:20px;">
+    © 2026 FF Bazar. All Rights Reserved.
+  </p>
+
+</footer>
+
+
+<!-- FIREBASE -->
+<script type="module">
+
+import {
+  initializeApp
+} from
+"https://www.gstatic.com/firebasejs/12.1.0/firebase-app.js";
+
+import {
+  getDatabase,
+  ref,
+  push,
+  set
+} from
+"https://www.gstatic.com/firebasejs/12.1.0/firebase-database.js";
+
+
+const firebaseConfig = {
+
+  apiKey:
+    "AIzaSyA-VQMjqAhIB33bc8Pm79voqB_OvwWrjzE",
+
+  authDomain:
+    "ff-bazar-4c198.firebaseapp.com",
+
+  projectId:
+    "ff-bazar-4c198",
+
+  storageBucket:
+    "ff-bazar-4c198.firebasestorage.app",
+
+  messagingSenderId:
+    "1090990307122",
+
+  appId:
+    "1:1090990307122:web:22f6b02df43b818b49092b",
+
+  measurementId:
+    "G-VY6LVKJRFX"
+};
+
+
+const app =
+  initializeApp(firebaseConfig);
+
+const db =
+  getDatabase(app);
+
+
+let selectedPayment = "";
+
+
+/* PACKAGE DATA */
+
+const packageData = {
+
+  diamond:{
+    title:"💎 Diamond Packages",
+
+    items:[
+      ["100 Diamonds","৳80"],
+      ["310 Diamonds","৳220"],
+      ["520 Diamonds","৳350"],
+      ["1060 Diamonds","৳700"],
+      ["2180 Diamonds","৳1400"],
+      ["5600 Diamonds","৳3500"]
+    ]
+  },
+
+
+  weekly:{
+    title:"👑 Weekly Membership",
+
+    items:[
+      ["Weekly Membership","৳99"]
+    ]
+  },
+
+
+  monthly:{
+    title:"🏆 Monthly Membership",
+
+    items:[
+      ["Monthly Membership","৳599"]
+    ]
+  },
+
+
+  levelup:{
+    title:"🚀 Level Up Packages",
+
+    items:[
+      ["Level Up 6","৳120"],
+      ["Level Up 10","৳180"],
+      ["Level Up 15","৳250"],
+      ["Level Up 20","৳350"]
+    ]
+  },
+
+
+  airdrop:{
+    title:"🎁 Airdrop Packages",
+
+    items:[
+      ["Airdrop 1","৳80"],
+      ["Airdrop 2","৳150"],
+      ["Airdrop 3","৳250"],
+      ["Special Airdrop","৳400"]
+    ]
+  }
+
+};
+
+
+/* OPEN CATEGORY */
+
+window.openCategory =
+function(category){
+
+  const data =
+    packageData[category];
+
+  if(!data) return;
+
+
+  document.getElementById(
+    "packageArea"
+  ).style.display = "block";
+
+
+  document.getElementById(
+    "packageTitle"
+  ).innerText = data.title;
+
+
+  const container =
+    document.getElementById(
+      "packages"
+    );
+
+
+  container.innerHTML = "";
+
+
+  data.items.forEach(
+    item => {
+
+      const name = item[0];
+      const price = item[1];
+
+
+      const card =
+        document.createElement("div");
+
+      card.className = "package";
+
+
+      card.innerHTML = `
+
+        <h3>${name}</h3>
+
+        <div class="price">
+          ${price}
+        </div>
+
+        <button class="btn">
+          Buy Now
+        </button>
+
+      `;
+
+
+      card
+        .querySelector("button")
+        .onclick =
+        function(){
+
+          selectPackage(
+            name + " - " + price
+          );
+
+        };
+
+
+      container.appendChild(card);
+
+    }
+  );
+
+
+  document.getElementById(
+    "packageArea"
+  ).scrollIntoView({
+    behavior:"smooth"
+  });
+
+};
+
+
+/* CLOSE */
+
+window.closePackages =
+function(){
+
+  document.getElementById(
+    "packageArea"
+  ).style.display = "none";
+
+};
+
+
+/* SELECT PACKAGE */
+
+window.selectPackage =
+function(name){
+
+  document.getElementById(
+    "selectedPackage"
+  ).value = name;
+
+
+  document.getElementById(
+    "order"
+  ).scrollIntoView({
+    behavior:"smooth"
+  });
+
+};
+
+
+/* PAYMENT */
+
+window.selectPayment =
+function(method){
+
+  selectedPayment = method;
+
+
+  document.getElementById(
+    "paymentMethod"
+  ).value = method;
+
+
+  document.getElementById(
+    "bkash"
+  ).classList.remove("active");
+
+
+  document.getElementById(
+    "nagad"
+  ).classList.remove("active");
+
+
+  if(method === "bKash"){
+
+    document.getElementById(
+      "bkash"
+    ).classList.add("active");
+
+  }
+
+
+  if(method === "Nagad"){
+
+    document.getElementById(
+      "nagad"
+    ).classList.add("active");
+
+  }
+
+};
+
+
+/* ORDER */
+
+document.getElementById(
+  "orderForm"
+).addEventListener(
+  "submit",
+  async function(e){
+
+    e.preventDefault();
+
+
+    const playerId =
+      document.getElementById(
+        "playerId"
+      ).value.trim();
+
+
+    const selectedPackage =
+      document.getElementById(
+        "selectedPackage"
+      ).value;
+
+
+    const trx =
+      document.getElementById(
+        "trx"
+      ).value.trim();
+
+
+    if(!selectedPayment){
+
+      alert(
+        "Payment Method নির্বাচন করুন।"
+      );
+
+      return;
+
+    }
+
+
+    if(!selectedPackage){
+
+      alert(
+        "আগে একটি Package নির্বাচন করুন।"
+      );
+
+      return;
+
+    }
+
+
+    const button =
+      document.getElementById(
+        "submitBtn"
+      );
+
+
+    button.disabled = true;
+
+    button.innerText =
+      "Submitting...";
+
+
+    try{
+
+      const orderRef =
+        push(
+          ref(db,"orders")
+        );
+
+
+      const orderId =
+        orderRef.key;
+
+
+      await set(
+        orderRef,
+        {
+
+          orderId:orderId,
+
+          playerId:playerId,
+
+          package:selectedPackage,
+
+          paymentMethod:
+            selectedPayment,
+
+          transactionId:trx,
+
+          status:"Pending",
+
+          createdAt:
+            new Date().toISOString()
+
+        }
+      );
+
+
+      const success =
+        document.getElementById(
+          "success"
+        );
+
+
+      success.style.display =
+        "block";
+
+
+      success.innerHTML =
+
+        "✅ <b>Order Submitted!</b><br><br>" +
+
+        "Your Order ID:<br>" +
+
+        "<b>" +
+        orderId +
+        "</b><br><br>" +
+
+        "Status: Pending";
+
+
+      document.getElementById(
+        "orderForm"
+      ).reset();
+
+
+      selectedPayment = "";
+
+
+      document.getElementById(
+        "bkash"
+      ).classList.remove("active");
+
+
+      document.getElementById(
+        "nagad"
+      ).classList.remove("active");
+
+
+    }catch(error){
+
+      console.error(error);
+
+      alert(
+        "Order submit হয়নি। Firebase Database ও Rules চেক করুন।"
+      );
+
+    }
+
+
+    button.disabled = false;
+
+    button.innerText =
+      "Submit Order";
+
+  }
+);
+
+
+/* SLIDER */
+
+let currentSlide = 0;
+
+const slides =
+  document.querySelectorAll(
+    ".slide"
+  );
+
+const dots =
+  document.querySelectorAll(
+    ".dot"
+  );
+
+
+window.showSlide =
+function(index){
+
+  currentSlide = index;
+
+
+  slides.forEach(
+    slide =>
+      slide.classList.remove(
+        "active"
+      )
+  );
+
+
+  dots.forEach(
+    dot =>
+      dot.classList.remove(
+        "active"
+      )
+  );
+
+
+  slides[index]
+    .classList.add("active");
+
+
+  dots[index]
+    .classList.add("active");
+
+};
+
+
+setInterval(
+  function(){
+
+    currentSlide++;
+
+    if(currentSlide >= slides.length){
+
+      currentSlide = 0;
+
+    }
+
+    showSlide(currentSlide);
+
+  },
+  4000
+);
+
+
+/* GO CATEGORY */
+
+window.goCategories =
+function(){
+
+  document.getElementById(
+    "categories"
+  ).scrollIntoView({
+    behavior:"smooth"
+  });
+
+};
+
+</script>
+
+</body>
+</html>
