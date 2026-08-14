@@ -1,0 +1,1585 @@
+<!DOCTYPE html>
+<html lang="bn">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta
+    name="viewport"
+    content="width=device-width,initial-scale=1.0">
+
+<meta
+    name="theme-color"
+    content="#1877f2">
+
+<title>BD Social</title>
+
+
+<style>
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:Arial,Helvetica,sans-serif;
+}
+
+body{
+    background:#f0f2f5;
+    color:#1c1e21;
+}
+
+
+/* ================= HEADER ================= */
+
+.header{
+    height:62px;
+
+    background:#fff;
+
+    border-bottom:1px solid #ddd;
+
+    position:sticky;
+
+    top:0;
+
+    z-index:1000;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:space-between;
+
+    padding:0 20px;
+}
+
+.logo{
+    font-size:25px;
+
+    font-weight:800;
+
+    color:#1877f2;
+
+    white-space:nowrap;
+}
+
+.search-box{
+    width:320px;
+}
+
+.search-box input{
+    width:100%;
+
+    height:42px;
+
+    border:0;
+
+    outline:0;
+
+    background:#f0f2f5;
+
+    border-radius:22px;
+
+    padding:0 17px;
+
+    font-size:14px;
+}
+
+.header-actions{
+    display:flex;
+
+    gap:8px;
+}
+
+.header-btn{
+    width:42px;
+
+    height:42px;
+
+    border:0;
+
+    border-radius:50%;
+
+    background:#f0f2f5;
+
+    cursor:pointer;
+
+    font-size:15px;
+
+    font-weight:bold;
+}
+
+.header-btn:hover{
+    background:#e4e6eb;
+}
+
+
+/* ================= LAYOUT ================= */
+
+.container{
+    max-width:1180px;
+
+    margin:auto;
+
+    display:grid;
+
+    grid-template-columns:230px 1fr 260px;
+
+    gap:20px;
+
+    padding:20px 12px 80px;
+}
+
+
+/* ================= SIDEBAR ================= */
+
+.sidebar{
+    position:sticky;
+
+    top:82px;
+
+    height:max-content;
+}
+
+.profile-mini{
+    display:flex;
+
+    align-items:center;
+
+    gap:10px;
+
+    padding:10px;
+
+    margin-bottom:10px;
+
+    cursor:pointer;
+
+    border-radius:8px;
+}
+
+.profile-mini:hover{
+    background:#e4e6eb;
+}
+
+.avatar{
+    width:42px;
+
+    height:42px;
+
+    border-radius:50%;
+
+    object-fit:cover;
+
+    background:#ddd;
+}
+
+.menu{
+    list-style:none;
+}
+
+.menu li{
+    padding:13px;
+
+    border-radius:8px;
+
+    cursor:pointer;
+
+    font-weight:600;
+
+    margin-bottom:3px;
+}
+
+.menu li:hover{
+    background:#e4e6eb;
+}
+
+
+/* ================= CREATE POST ================= */
+
+.create-box{
+    background:#fff;
+
+    padding:15px;
+
+    border-radius:10px;
+
+    box-shadow:0 1px 3px rgba(0,0,0,.12);
+
+    margin-bottom:16px;
+}
+
+.create-top{
+    display:flex;
+
+    align-items:center;
+
+    gap:10px;
+}
+
+.create-input{
+    flex:1;
+
+    border:0;
+
+    outline:0;
+
+    background:#f0f2f5;
+
+    border-radius:24px;
+
+    padding:14px 18px;
+
+    cursor:pointer;
+
+    font-size:15px;
+}
+
+.create-actions{
+    display:grid;
+
+    grid-template-columns:repeat(3,1fr);
+
+    border-top:1px solid #eee;
+
+    margin-top:15px;
+
+    padding-top:10px;
+}
+
+.create-actions button{
+    border:0;
+
+    background:none;
+
+    padding:11px;
+
+    cursor:pointer;
+
+    font-weight:bold;
+
+    color:#555;
+
+    border-radius:7px;
+}
+
+.create-actions button:hover{
+    background:#f0f2f5;
+}
+
+
+/* ================= POST ================= */
+
+.post{
+    background:#fff;
+
+    border-radius:10px;
+
+    padding:15px;
+
+    margin-bottom:16px;
+
+    box-shadow:0 1px 3px rgba(0,0,0,.12);
+}
+
+.post-head{
+    display:flex;
+
+    align-items:center;
+
+    gap:10px;
+}
+
+.post-user{
+    font-weight:bold;
+
+    cursor:pointer;
+}
+
+.post-user:hover{
+    text-decoration:underline;
+}
+
+.post-time{
+    color:#777;
+
+    font-size:12px;
+
+    margin-top:3px;
+}
+
+.post-text{
+    margin:15px 0;
+
+    line-height:1.6;
+
+    white-space:pre-wrap;
+
+    word-break:break-word;
+}
+
+.post-image{
+    width:100%;
+
+    max-height:550px;
+
+    object-fit:cover;
+
+    border-radius:8px;
+
+    display:block;
+}
+
+.post-video{
+    width:100%;
+
+    max-height:550px;
+
+    border-radius:8px;
+
+    display:block;
+}
+
+.stats{
+    display:flex;
+
+    justify-content:space-between;
+
+    padding:11px 3px;
+
+    color:#65676b;
+
+    font-size:13px;
+
+    border-bottom:1px solid #ddd;
+}
+
+.post-buttons{
+    display:grid;
+
+    grid-template-columns:repeat(3,1fr);
+
+    gap:3px;
+
+    margin-top:5px;
+}
+
+.post-buttons button{
+    border:0;
+
+    background:#fff;
+
+    padding:11px;
+
+    cursor:pointer;
+
+    font-weight:bold;
+
+    color:#555;
+
+    border-radius:7px;
+}
+
+.post-buttons button:hover{
+    background:#f0f2f5;
+}
+
+.post-buttons button.active{
+    color:#1877f2;
+}
+
+
+/* ================= COMMENT ================= */
+
+.comments{
+    margin-top:10px;
+}
+
+.comment{
+    display:flex;
+
+    gap:8px;
+
+    margin-top:8px;
+}
+
+.comment-content{
+    background:#f0f2f5;
+
+    border-radius:15px;
+
+    padding:8px 12px;
+
+    font-size:13px;
+}
+
+.comment-name{
+    font-weight:bold;
+
+    margin-bottom:3px;
+}
+
+.comment-form{
+    display:flex;
+
+    gap:7px;
+
+    margin-top:10px;
+}
+
+.comment-form input{
+    flex:1;
+
+    border:0;
+
+    outline:0;
+
+    background:#f0f2f5;
+
+    border-radius:20px;
+
+    padding:10px 14px;
+}
+
+.comment-form button{
+    border:0;
+
+    border-radius:20px;
+
+    padding:0 14px;
+
+    background:#1877f2;
+
+    color:white;
+
+    cursor:pointer;
+}
+
+
+/* ================= RIGHT BAR ================= */
+
+.rightbar{
+    position:sticky;
+
+    top:82px;
+
+    height:max-content;
+}
+
+.card{
+    background:#fff;
+
+    padding:16px;
+
+    border-radius:10px;
+
+    box-shadow:0 1px 3px rgba(0,0,0,.12);
+
+    margin-bottom:15px;
+}
+
+.card h3{
+    margin-bottom:12px;
+}
+
+.user-row{
+    display:flex;
+
+    align-items:center;
+
+    gap:10px;
+
+    padding:9px 0;
+
+    cursor:pointer;
+}
+
+.user-row:hover{
+    background:#f0f2f5;
+}
+
+.user-row-info{
+    flex:1;
+}
+
+.user-name{
+    font-weight:bold;
+}
+
+.user-email{
+    font-size:11px;
+
+    color:#777;
+}
+
+
+/* ================= CHAT ================= */
+
+.chat-panel{
+    position:fixed;
+
+    right:20px;
+
+    bottom:20px;
+
+    width:350px;
+
+    height:470px;
+
+    background:#fff;
+
+    border-radius:12px;
+
+    box-shadow:0 5px 30px rgba(0,0,0,.25);
+
+    display:none;
+
+    flex-direction:column;
+
+    overflow:hidden;
+
+    z-index:3000;
+}
+
+.chat-head{
+    min-height:58px;
+
+    background:#1877f2;
+
+    color:#fff;
+
+    padding:0 14px;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:space-between;
+}
+
+.chat-head button{
+    border:0;
+
+    background:rgba(255,255,255,.15);
+
+    color:#fff;
+
+    padding:7px 10px;
+
+    border-radius:6px;
+
+    cursor:pointer;
+}
+
+.chat-body{
+    flex:1;
+
+    padding:12px;
+
+    overflow-y:auto;
+
+    background:#f0f2f5;
+
+    display:flex;
+
+    flex-direction:column;
+}
+
+.message{
+    max-width:75%;
+
+    padding:9px 12px;
+
+    margin:5px 0;
+
+    border-radius:15px;
+
+    word-break:break-word;
+}
+
+.message.received{
+    background:#fff;
+
+    align-self:flex-start;
+}
+
+.message.sent{
+    background:#1877f2;
+
+    color:#fff;
+
+    align-self:flex-end;
+}
+
+.chat-input{
+    display:flex;
+
+    gap:7px;
+
+    padding:8px;
+
+    border-top:1px solid #ddd;
+}
+
+.chat-input input{
+    flex:1;
+
+    border:0;
+
+    outline:0;
+
+    background:#f0f2f5;
+
+    border-radius:20px;
+
+    padding:10px 14px;
+}
+
+.chat-input button{
+    border:0;
+
+    background:#1877f2;
+
+    color:#fff;
+
+    border-radius:20px;
+
+    padding:0 15px;
+
+    cursor:pointer;
+}
+
+
+/* ================= MODAL ================= */
+
+.modal{
+    position:fixed;
+
+    inset:0;
+
+    background:rgba(0,0,0,.55);
+
+    display:none;
+
+    align-items:center;
+
+    justify-content:center;
+
+    padding:15px;
+
+    z-index:4000;
+}
+
+.modal-box{
+    width:100%;
+
+    max-width:520px;
+
+    background:#fff;
+
+    border-radius:12px;
+
+    padding:20px;
+}
+
+.modal-box h2{
+    margin-bottom:15px;
+}
+
+.modal-box textarea{
+    width:100%;
+
+    min-height:140px;
+
+    border:1px solid #ddd;
+
+    border-radius:8px;
+
+    padding:12px;
+
+    resize:none;
+
+    outline:0;
+
+    font-size:15px;
+}
+
+.file-input{
+    margin-top:12px;
+
+    width:100%;
+}
+
+.modal-actions{
+    display:flex;
+
+    justify-content:flex-end;
+
+    gap:8px;
+
+    margin-top:12px;
+}
+
+.btn{
+    border:0;
+
+    padding:10px 18px;
+
+    border-radius:7px;
+
+    cursor:pointer;
+}
+
+.btn-cancel{
+    background:#e4e6eb;
+}
+
+.btn-primary{
+    background:#1877f2;
+
+    color:#fff;
+}
+
+.loading{
+    text-align:center;
+
+    padding:30px;
+
+    color:#777;
+}
+
+
+/* ================= PROFILE MODAL ================= */
+
+.profile-modal-content{
+    text-align:center;
+}
+
+.profile-large{
+    width:100px;
+
+    height:100px;
+
+    border-radius:50%;
+
+    object-fit:cover;
+
+    margin-bottom:12px;
+}
+
+.profile-modal-content h2{
+    margin-bottom:5px;
+}
+
+.profile-modal-content p{
+    color:#777;
+
+    margin-bottom:15px;
+}
+
+
+/* ================= MOBILE ================= */
+
+.mobile-nav{
+    display:none;
+
+    position:fixed;
+
+    left:0;
+
+    right:0;
+
+    bottom:0;
+
+    height:62px;
+
+    background:#fff;
+
+    border-top:1px solid #ddd;
+
+    z-index:2000;
+
+    justify-content:space-around;
+
+    align-items:center;
+}
+
+.mobile-nav button{
+    border:0;
+
+    background:none;
+
+    font-size:13px;
+
+    font-weight:bold;
+
+    cursor:pointer;
+}
+
+
+@media(max-width:950px){
+
+    .container{
+        grid-template-columns:1fr;
+
+        max-width:680px;
+    }
+
+    .sidebar,
+    .rightbar{
+        display:none;
+    }
+
+    .mobile-nav{
+        display:flex;
+    }
+
+}
+
+
+@media(max-width:600px){
+
+    .header{
+        padding:0 9px;
+    }
+
+    .logo{
+        font-size:20px;
+    }
+
+    .search-box{
+        width:145px;
+    }
+
+    .search-box input{
+        height:38px;
+
+        font-size:12px;
+    }
+
+    .header-btn{
+        width:36px;
+
+        height:36px;
+    }
+
+    .container{
+        padding:10px 5px 75px;
+    }
+
+    .chat-panel{
+        width:calc(100% - 20px);
+
+        right:10px;
+
+        bottom:72px;
+    }
+
+}
+
+
+@media(max-width:420px){
+
+    .search-box{
+        width:105px;
+    }
+
+}
+
+</style>
+
+</head>
+
+
+<body>
+
+
+<!-- ================= HEADER ================= -->
+
+<header class="header">
+
+    <div
+        class="logo"
+        onclick="home()">
+
+        BD Social
+
+    </div>
+
+
+    <div class="search-box">
+
+        <input
+            id="searchInput"
+            type="search"
+            placeholder="Search BD Social">
+
+    </div>
+
+
+    <div class="header-actions">
+
+        <button
+            class="header-btn"
+            onclick="openChat()">
+
+            Chat
+
+        </button>
+
+
+        <button
+            class="header-btn"
+            onclick="showNotifications()">
+
+            Alerts
+
+        </button>
+
+
+        <button
+            class="header-btn"
+            onclick="showProfile()">
+
+            Profile
+
+        </button>
+
+    </div>
+
+</header>
+
+
+
+<!-- ================= MAIN ================= -->
+
+<div class="container">
+
+
+<!-- ================= LEFT ================= -->
+
+<aside class="sidebar">
+
+    <div
+        class="profile-mini"
+        onclick="showProfile()">
+
+        <img
+            id="sideAvatar"
+            class="avatar"
+            src="https://i.pravatar.cc/100">
+
+        <span id="sideName">
+            My Profile
+        </span>
+
+    </div>
+
+
+    <ul class="menu">
+
+        <li onclick="home()">
+            Home
+        </li>
+
+        <li onclick="showProfile()">
+            Profile
+        </li>
+
+        <li onclick="openChat()">
+            Messages
+        </li>
+
+        <li onclick="showNotifications()">
+            Notifications
+        </li>
+
+        <li onclick="searchUsers()">
+            Friends
+        </li>
+
+        <li onclick="openPostModal()">
+            Create Post
+        </li>
+
+        <li onclick="logoutUser()">
+            Logout
+        </li>
+
+    </ul>
+
+</aside>
+
+
+
+<!-- ================= FEED ================= -->
+
+<main>
+
+
+<section class="create-box">
+
+    <div class="create-top">
+
+        <img
+            id="createAvatar"
+            class="avatar"
+            src="https://i.pravatar.cc/100">
+
+        <input
+            class="create-input"
+            placeholder="What's on your mind?"
+            onclick="openPostModal()"
+            readonly>
+
+    </div>
+
+
+    <div class="create-actions">
+
+        <button onclick="openPostModal()">
+            Photo
+        </button>
+
+        <button onclick="openPostModal()">
+            Video
+        </button>
+
+        <button onclick="openPostModal()">
+            Text Post
+        </button>
+
+    </div>
+
+</section>
+
+
+<div id="feed">
+
+    <div class="loading">
+        Loading posts...
+    </div>
+
+</div>
+
+
+</main>
+
+
+
+<!-- ================= RIGHT ================= -->
+
+<aside class="rightbar">
+
+
+<div class="card">
+
+    <h3>
+        People
+    </h3>
+
+    <div id="peopleList">
+        Loading...
+    </div>
+
+</div>
+
+
+<div class="card">
+
+    <h3>
+        Account
+    </h3>
+
+    <p
+        id="accountEmail"
+        style="font-size:13px;color:#777;">
+    </p>
+
+    <button
+        onclick="logoutUser()"
+        style="
+        width:100%;
+        margin-top:12px;
+        padding:10px;
+        border:0;
+        border-radius:7px;
+        background:#e4e6eb;
+        cursor:pointer;">
+
+        Logout
+
+    </button>
+
+</div>
+
+</aside>
+
+</div>
+
+
+
+<!-- ================= MOBILE NAV ================= -->
+
+<nav class="mobile-nav">
+
+    <button onclick="home()">
+        Home
+    </button>
+
+    <button onclick="focusSearch()">
+        Search
+    </button>
+
+    <button onclick="openPostModal()">
+        Post
+    </button>
+
+    <button onclick="openChat()">
+        Chat
+    </button>
+
+    <button onclick="showProfile()">
+        Profile
+    </button>
+
+</nav>
+
+
+
+<!-- ================= CHAT ================= -->
+
+<div
+    class="chat-panel"
+    id="chatPanel">
+
+
+    <div class="chat-head">
+
+        <strong id="chatTitle">
+            Select user
+        </strong>
+
+        <button onclick="closeChat()">
+            Close
+        </button>
+
+    </div>
+
+
+    <div
+        class="chat-body"
+        id="chatBody">
+
+        <div
+            style="
+            text-align:center;
+            color:#777;
+            margin-top:30px;">
+
+            Select a person to start chatting.
+
+        </div>
+
+    </div>
+
+
+    <div class="chat-input">
+
+        <input
+            id="messageInput"
+            placeholder="Write a message..."
+            disabled>
+
+        <button
+            id="sendMessageBtn"
+            onclick="sendMessage()"
+            disabled>
+
+            Send
+
+        </button>
+
+    </div>
+
+</div>
+
+
+
+<!-- ================= POST MODAL ================= -->
+
+<div
+    class="modal"
+    id="postModal">
+
+    <div class="modal-box">
+
+        <h2>
+            Create Post
+        </h2>
+
+
+        <textarea
+            id="postText"
+            placeholder="What's on your mind?"></textarea>
+
+
+        <input
+            class="file-input"
+            id="postFile"
+            type="file"
+            accept="image/*,video/*">
+
+
+        <div class="modal-actions">
+
+            <button
+                class="btn btn-cancel"
+                onclick="closePostModal()">
+
+                Cancel
+
+            </button>
+
+
+            <button
+                class="btn btn-primary"
+                id="publishBtn"
+                onclick="createPost()">
+
+                Publish
+
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+
+<!-- ================= PROFILE MODAL ================= -->
+
+<div
+    class="modal"
+    id="profileModal">
+
+    <div class="modal-box">
+
+        <div class="profile-modal-content">
+
+            <img
+                id="profileAvatar"
+                class="profile-large"
+                src="https://i.pravatar.cc/100">
+
+
+            <h2 id="profileName">
+                My Profile
+            </h2>
+
+
+            <p id="profileEmail">
+                Loading...
+            </p>
+
+
+            <p id="profileBio">
+                BD Social user
+            </p>
+
+
+            <button
+                class="btn btn-primary"
+                onclick="closeProfile()">
+
+                Close
+
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+
+<script type="module">
+
+
+/* ================= FIREBASE ================= */
+
+import {
+    auth,
+    db,
+    storage
+} from "./firebase.js";
+
+
+import {
+    onAuthStateChanged,
+    signOut
+} from "https://www.gstatic.com/firebasejs/12.1.0/firebase-auth.js";
+
+
+import {
+    collection,
+    doc,
+    addDoc,
+    setDoc,
+    getDoc,
+    getDocs,
+    query,
+    orderBy,
+    limit,
+    onSnapshot,
+    serverTimestamp,
+    updateDoc,
+    arrayUnion,
+    arrayRemove
+} from "https://www.gstatic.com/firebasejs/12.1.0/firebase-firestore.js";
+
+
+import {
+    ref,
+    uploadBytes,
+    getDownloadURL
+} from "https://www.gstatic.com/firebasejs/12.1.0/firebase-storage.js";
+
+
+
+let currentUser = null;
+
+let currentProfile = null;
+
+let selectedChatUser = null;
+
+let unsubscribeMessages = null;
+
+
+
+/* ================= AUTH ================= */
+
+onAuthStateChanged(
+    auth,
+    async user => {
+
+        if(!user){
+
+            window.location.href =
+                "login.html";
+
+            return;
+        }
+
+
+        currentUser = user;
+
+
+        await loadMyProfile();
+
+        loadPosts();
+
+        loadPeople();
+
+    }
+);
+
+
+
+/* ================= PROFILE ================= */
+
+async function loadMyProfile(){
+
+    try{
+
+        const userRef =
+            doc(
+                db,
+                "users",
+                currentUser.uid
+            );
+
+
+        const snap =
+            await getDoc(userRef);
+
+
+        if(snap.exists()){
+
+            currentProfile =
+                snap.data();
+
+        }else{
+
+            currentProfile = {
+
+                uid:currentUser.uid,
+
+                name:
+                    currentUser.email
+                    .split("@")[0],
+
+                email:
+                    currentUser.email,
+
+                photoURL:"",
+
+                bio:""
+
+            };
+
+
+            await setDoc(
+                userRef,
+                currentProfile,
+                {merge:true}
+            );
+
+        }
+
+
+        const name =
+            currentProfile.name ||
+            "User";
+
+
+        const photo =
+            currentProfile.photoURL ||
+            "https://i.pravatar.cc/100?u="
+            + currentUser.uid;
+
+
+        document.getElementById(
+            "sideName"
+        ).innerText = name;
+
+
+        document.getElementById(
+            "sideAvatar"
+        ).src = photo;
+
+
+        document.getElementById(
+            "createAvatar"
+        ).src = photo;
+
+
+        document.getElementById(
+            "accountEmail"
+        ).innerText =
+            currentUser.email;
+
+
+        document.getElementById(
+            "profileName"
+        ).innerText = name;
+
+
+        document.getElementById(
+            "profileEmail"
+        ).innerText =
+            currentUser.email;
+
+
+        document.getElementById(
+            "profileAvatar"
+        ).src = photo;
+
+
+        document.getElementById(
+            "profileBio"
+        ).innerText =
+            currentProfile.bio ||
+            "BD Social user";
+
+
+    }catch(error){
+
+        console.error(error);
+
+    }
+
+}
+
+
+
+/* ================= POSTS ================= */
+
+function loadPosts(){
+
+    const feed =
+        document.getElementById("feed");
+
+
+    const postsQuery =
+        query(
+            collection(db,"posts"),
+            orderBy(
+                "createdAt",
+                "desc"
+            ),
+            limit(50)
+        );
+
+
+    onSnapshot(
+        postsQuery,
+        snapshot => {
+
+            feed.innerHTML = "";
+
+
+            if(snapshot.empty){
+
+                feed.innerHTML = `
+                    <div class="loading">
+                        No posts yet. Create the first post.
+                    </div>
+                `;
+
+                return;
+            }
+
+
+            snapshot.forEach(
+                postDoc => {
+
+                    const data =
+                        postDoc.data();
+
+
+                    renderPost(
+                        postDoc.id,
+                        data
+                    );
+
+                }
+            );
+
+        },
+        error => {
+
+            console.error(error);
+
+            feed.innerHTML = `
+                <div class="loading">
+                    Unable to load posts.
+                </div>
+            `;
+
+        }
+    );
+
+}
+
+
+
+/* ================= RENDER POST ================= */
+
+function renderPost(id,data){
+
+    const feed =
